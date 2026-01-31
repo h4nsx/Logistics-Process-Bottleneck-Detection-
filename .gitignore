@@ -1,0 +1,133 @@
+    # =======================================================
+# 1. GLOBAL / SYSTEM / IDE
+# =======================================================
+# OS System Files
+.DS_Store
+.DS_Store?
+._*
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Editor & IDE Directories
+.idea/
+.vscode/
+*.swp
+*.swo
+*.sublime-*
+
+# Secrets & Environment Variables (Apply to all folders)
+.env
+.env.local
+.env.*.local
+*.env
+!*.example
+!.env.example
+
+# Docker Local Overrides
+docker-compose.override.yml
+*.log
+
+# =======================================================
+# 2. FRONTEND (ReactJS)
+# =======================================================
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Production Build Output
+build/
+dist/
+.next/
+out/
+
+# Testing & Logs
+coverage/
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+.eslintcache
+
+# =======================================================
+# 3. BACKEND (Python)
+# =======================================================
+# Byte-compiled / Optimized files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environments (Common names)
+venv/
+.venv/
+env/
+ENV/
+
+# Distribution / Packaging
+.Python
+eggs/
+.eggs/
+*.egg-info/
+*.egg
+
+# Testing & Type Checking
+.pytest_cache/
+.mypy_cache/
+.tox/
+.coverage
+htmlcov/
+nosetests.xml
+coverage.xml
+
+# Local Databases (Don't commit local DBs)
+*.sqlite3
+*.db
+*.sqlite
+
+# =======================================================
+# 4. ML (Machine Learning & Isolation Models)
+# =======================================================
+# Jupyter Notebook Checkpoints
+.ipynb_checkpoints/
+
+# Model Weights & Artifacts (Large files)
+*.pkl
+*.pickle
+*.pt
+*.pth
+*.h5
+*.hdf5
+*.onnx
+*.joblib
+*.pb
+saved_model/
+
+# Data Sets (Prevent committing large data files)
+# Adjust these extensions based on your data format
+*.csv
+*.tsv
+*.jsonl
+*.parquet
+*.feather
+*.xls
+*.xlsx
+
+# Compressed Data
+*.zip
+*.tar
+*.tar.gz
+*.gz
+*.7z
+
+# Tensorboard / ML Flow Logs
+runs/
+wandb/
+mlruns/
+lightning_logs/
+
+# =======================================================
+# 5. EXCEPTION RULES (Allow specific files if needed)
+# =======================================================
+# If you explicitly want to track a specific config csv or small model:
+# !ML/configs/model_config.json
+# !ML/data/sample_data.csv
