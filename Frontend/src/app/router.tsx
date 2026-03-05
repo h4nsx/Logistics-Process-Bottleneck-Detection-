@@ -1,6 +1,10 @@
 import { Routes, Route } from 'react-router-dom';
 import MainLayout from './layout/MainLayout';
+import AuthLayout from './layout/AuthLayout';
 import HomePage from '../pages/marketing/HomePage';
+import LoginPage from '../pages/auth/LoginPage';
+import RegisterPage from '../pages/auth/RegisterPage';
+import ForgotPasswordPage from '../pages/auth/ForgotPasswordPage';
 
 /* Placeholder page for demonstration */
 const PlaceholderPage = ({ title }: { title: string }) => (
@@ -15,7 +19,7 @@ const PlaceholderPage = ({ title }: { title: string }) => (
 const AppRouter = () => {
   return (
     <Routes>
-      {/* Marketing pages use MainLayout */}
+      {/* Marketing pages use MainLayout (Navbar + Footer) */}
       <Route element={<MainLayout />}>
         <Route path="/" element={<HomePage />} />
         <Route path="/product" element={<PlaceholderPage title="Product" />} />
@@ -26,8 +30,13 @@ const AppRouter = () => {
         <Route path="/pricing" element={<PlaceholderPage title="Pricing" />} />
         <Route path="/resources/:section" element={<PlaceholderPage title="Resources" />} />
         <Route path="/about-us/:section" element={<PlaceholderPage title="About Us" />} />
-        <Route path="/login" element={<PlaceholderPage title="Sign In" />} />
-        <Route path="/register" element={<PlaceholderPage title="Create Account" />} />
+      </Route>
+
+      {/* Auth pages use AuthLayout (split-screen, no Navbar/Footer) */}
+      <Route element={<AuthLayout />}>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
       </Route>
     </Routes>
   );
