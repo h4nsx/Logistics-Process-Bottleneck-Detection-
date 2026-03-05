@@ -85,7 +85,6 @@ const navigation: NavItem[] = [
     children: [
       { label: 'Documentation', href: '/resources/docs', icon: <BookOpen className="w-5 h-5" />, description: 'Guides, tutorials, and references' },
       { label: 'API Reference', href: '/resources/api', icon: <Code2 className="w-5 h-5" />, description: 'RESTful API for integrations' },
-      { label: 'Blog', href: '/resources/blog', icon: <PenLine className="w-5 h-5" />, description: 'Insights on process mining and logistics' },
       { label: 'Help Center', href: '/resources/help', icon: <HelpCircle className="w-5 h-5" />, description: 'FAQs and support articles' },
     ],
   },
@@ -94,7 +93,6 @@ const navigation: NavItem[] = [
     children: [
       { label: 'About', href: '/about-us/about', icon: <Users className="w-5 h-5" />, description: 'Our mission and team' },
       { label: 'Contact', href: '/about-us/contact', icon: <Mail className="w-5 h-5" />, description: 'Get in touch with us' },
-      { label: 'Careers', href: '/about-us/careers', icon: <Briefcase className="w-5 h-5" />, description: "Join our team" },
     ],
   },
 ];
