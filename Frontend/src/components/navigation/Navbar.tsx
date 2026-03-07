@@ -21,11 +21,9 @@ import {
   FileBarChart,
   BookOpen,
   Code2,
-  PenLine,
   HelpCircle,
   Users,
   Mail,
-  Briefcase,
   ArrowRight,
 } from 'lucide-react';
 

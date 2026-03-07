@@ -73,6 +73,11 @@ const RegisterPage = () => {
   const showError = (field: string, value: string) =>
     (touched[field] || submitted) && value.trim() === '';
 
+  const passwordTooShort =
+    (touched['password'] || submitted) && password.trim() !== '' && password.length < 6;
+
+  const hasPasswordError = showError('password', password) || passwordTooShort;
+
   const inputClass = (field: string, value: string, extra = '') =>
     `w-full pl-10 pr-4 py-2.5 bg-white border rounded-xl text-sm text-content-primary placeholder-content-muted focus:outline-none focus:ring-2 transition-all ${extra} ${
       showError(field, value)
@@ -86,7 +91,7 @@ const RegisterPage = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitted(true);
-    if (!fullName.trim() || !email.trim() || !password.trim() || !confirmPassword.trim() || !passwordsMatch || !agreedToTerms) return;
+    if (!fullName.trim() || !email.trim() || !password.trim() || password.length < 6 || !confirmPassword.trim() || !passwordsMatch || !agreedToTerms) return;
     // TODO: Integrate with auth API
     console.log('Register attempt:', { fullName, email });
   };
@@ -187,7 +192,7 @@ const RegisterPage = () => {
             Password
           </label>
           <div className="relative">
-            <Lock className={`absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 pointer-events-none ${showError('password', password) ? 'text-danger' : 'text-content-muted'}`} />
+            <Lock className={`absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 pointer-events-none ${hasPasswordError ? 'text-danger' : 'text-content-muted'}`} />
             <input
               id="register-password"
               type={showPassword ? 'text' : 'password'}
@@ -195,9 +200,12 @@ const RegisterPage = () => {
               onChange={(e) => setPassword(e.target.value)}
               onBlur={() => handleBlur('password')}
               placeholder="Create a strong password"
-              minLength={6}
               autoComplete="new-password"
-              className={inputClass('password', password, 'pr-11')}
+              className={`w-full pl-10 pr-11 py-2.5 bg-white border rounded-xl text-sm text-content-primary placeholder-content-muted focus:outline-none focus:ring-2 transition-all ${
+                hasPasswordError
+                  ? 'border-danger focus:ring-danger/40 focus:border-danger bg-danger-50/30'
+                  : 'border-border focus:ring-orange/40 focus:border-orange'
+              }`}
             />
             <button
               type="button"
@@ -210,6 +218,9 @@ const RegisterPage = () => {
           </div>
           {showError('password', password) && (
             <p className="text-xs text-danger mt-1.5">Password is required</p>
+          )}
+          {passwordTooShort && (
+            <p className="text-xs text-danger mt-1.5">Password must be at least 6 characters</p>
           )}
 
           {/* Password Strength Indicator */}
