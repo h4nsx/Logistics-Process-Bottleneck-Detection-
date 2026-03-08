@@ -12,6 +12,7 @@ import HelpCenterPage from '../pages/resources/HelpCenter';
 import InteractiveDemoPage from '../pages/resources/InteractiveDemo';
 import ApiReferencePage from '../pages/resources/ApiReference';
 import ResetPasswordPage from '../pages/auth/ResetPasswordPage';
+import PricingPage from '../pages/marketing/PricingPage';
 
 /* Placeholder page for demonstration */
 const PlaceholderPage = ({ title }: { title: string }) => (
@@ -35,15 +36,15 @@ const AppRouter = () => {
         <Route path="/demo" element={<PlaceholderPage title="Demo" />} />
         <Route path="/demo/example" element={<InteractiveDemoPage />} />
         <Route path="/demo/:section" element={<PlaceholderPage title="Demo" />} />
-        <Route path="/pricing" element={<PlaceholderPage title="Pricing" />} />
+        <Route path="/pricing" element={<PricingPage />} />
         <Route path="/resources/docs" element={<DocumentationPage />} />
         <Route path="/resources/help" element={<HelpCenterPage />} />
         <Route path="/resources/api" element={<ApiReferencePage />} />
         <Route path="/resources/:section" element={<PlaceholderPage title="Resources" />} />
-        <Route path="/about-us/:section" element={<PlaceholderPage title="About Us" />} />
         <Route path="/about-us/about" element={<CompanyPage />} />
         <Route path="/about-us/contact" element={<ContactPage />} />
         <Route path="/about-us/team" element={<PlaceholderPage title="Team" />} />
+        <Route path="/about-us/:section" element={<PlaceholderPage title="About Us" />} />
       </Route>
 
       {/* Auth pages use AuthLayout (split-screen, no Navbar/Footer) */}

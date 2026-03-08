@@ -42,10 +42,10 @@ const HeroSection = () => (
       <h1
         className="text-4xl lg:text-5xl font-bold text-content-primary mb-6 leading-tight opacity-0 animate-[fadeInUp_0.7s_ease-out_0.4s_forwards]"
       >
-        Making logistics
+        Shining a light on
         <br />
         <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange via-orange-dark to-orange animate-shimmer bg-[length:200%_auto]">
-          smarter, faster, simpler
+          hidden logistics bottlenecks
         </span>
       </h1>
 
@@ -53,8 +53,8 @@ const HeroSection = () => (
       <p
         className="text-lg text-content-secondary leading-relaxed max-w-2xl mx-auto mb-10 opacity-0 animate-[fadeInUp_0.7s_ease-out_0.6s_forwards]"
       >
-        Vyn is an AI-powered logistics intelligence platform that helps supply chain teams
-        detect bottlenecks, analyze process flows, and optimize operations — all from raw event data.
+        Vyn is a <strong className="text-content-primary">statistical intelligence platform</strong> that helps supply chain teams
+        identify which steps are causing abnormal delays — using pure data science, no black-box AI.
       </p>
 
       {/* Info badges — last */}
@@ -93,17 +93,22 @@ const MissionSection = () => (
             <span className="text-xs font-semibold text-navy tracking-wide uppercase">Our Mission</span>
           </div>
           <h2 className="text-3xl lg:text-4xl font-bold text-content-primary mb-6 leading-tight">
-            Eliminate blind spots in logistics operations
+            Your operations have hidden delays. Vyn tells you exactly where.
           </h2>
-          <p className="text-base text-content-secondary leading-relaxed mb-6">
-            Traditional logistics monitoring relies on manual spreadsheet analysis and reactive firefighting.
-            Teams spend days — sometimes weeks — trying to find where shipments get stuck, why deliveries are delayed,
-            and which process steps are failing.
+          <p className="text-base text-content-secondary leading-relaxed mb-4">
+            Logistics teams know delays exist — they feel them in missed SLAs, angry customers, and overloaded staff.
+            But pinpointing <em>which</em> step is abnormally slow, and <em>how risky</em> it is, has always required
+            costly data science resources.
+          </p>
+          <p className="text-base text-content-secondary leading-relaxed mb-4">
+            Vyn solves this with <strong className="text-content-primary">pure statistical intelligence</strong>:
+            we compute the mean, standard deviation, and 95th percentile (p95) for every step in your process —
+            then flag executions where the z-score ≥ 2 or duration exceeds p95. No black-box AI.
+            No need to expose sensitive business logic.
           </p>
           <p className="text-base text-content-secondary leading-relaxed">
-            Vyn changes that. We use <strong className="text-content-primary">Isolation Forest anomaly detection</strong> and
-            automated <strong className="text-content-primary">process mining</strong> to turn raw event logs into
-            actionable intelligence — in under 5 minutes. No data science team required.
+            Just upload your execution timestamps as a CSV, and Vyn surfaces every bottleneck with
+            a transparent, auditable risk score — in minutes.
           </p>
         </div>
 
@@ -143,15 +148,15 @@ const values = [
   },
   {
     icon: <Lightbulb className="w-6 h-6" />,
-    title: 'Intelligence, Not Complexity',
-    description: "Powerful AI that's accessible to everyone. No PhD in data science required — just upload your data and let Vyn do the heavy lifting.",
+    title: 'Statistics, Not Black-Box AI',
+    description: 'No machine-learning predictions or opaque models. Vyn uses mean, standard deviation, and p95 baselines — methods your team can audit, explain, and trust.',
     color: 'text-cyan',
     bg: 'bg-cyan-50',
   },
   {
     icon: <Shield className="w-6 h-6" />,
-    title: 'Trust & Transparency',
-    description: 'Every detection includes a risk score and explanation. You see exactly why Vyn flagged something, so you can act with confidence.',
+    title: 'No Business Secrets Required',
+    description: 'You only share execution timestamps — start_time, end_time, step code, and location. Vyn never asks for pricing, contracts, or any sensitive business data.',
     color: 'text-navy',
     bg: 'bg-navy-50',
   },

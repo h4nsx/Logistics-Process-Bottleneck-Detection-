@@ -44,7 +44,8 @@ const ContactFormSection = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    subject: '',
+    companyName: '',
+    role: '',
     message: '',
   });
   const [submitted, setSubmitted] = useState(false);
@@ -82,7 +83,7 @@ const ContactFormSection = () => {
             <button
               onClick={() => {
                 setSubmitted(false);
-                setFormData({ name: '', email: '', subject: '', message: '' });
+                setFormData({ name: '', email: '', companyName: '', role: '', message: '' });
               }}
               className="text-sm font-medium text-orange hover:text-orange-dark transition-colors"
             >
@@ -142,11 +143,11 @@ const ContactFormSection = () => {
           {/* Right: Form */}
           <div className="lg:col-span-3">
             <form onSubmit={handleSubmit} className="bg-white rounded-2xl border border-border p-6 lg:p-8 space-y-5">
+              {/* Row 1: Full Name + Work Email */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                {/* Name */}
                 <div>
                   <label htmlFor="contact-name" className="block text-sm font-medium text-content-primary mb-1.5">
-                    Name
+                    Full Name <span className="text-danger">*</span>
                   </label>
                   <input
                     id="contact-name"
@@ -154,16 +155,14 @@ const ContactFormSection = () => {
                     type="text"
                     value={formData.name}
                     onChange={handleChange}
-                    placeholder="Your name"
+                    placeholder="Jane Smith"
                     required
                     className="w-full px-4 py-2.5 bg-white border border-border rounded-xl text-sm text-content-primary placeholder-content-muted focus:outline-none focus:ring-2 focus:ring-orange/40 focus:border-orange transition-all"
                   />
                 </div>
-
-                {/* Email */}
                 <div>
                   <label htmlFor="contact-email" className="block text-sm font-medium text-content-primary mb-1.5">
-                    Email
+                    Work Email <span className="text-danger">*</span>
                   </label>
                   <input
                     id="contact-email"
@@ -171,34 +170,50 @@ const ContactFormSection = () => {
                     type="email"
                     value={formData.email}
                     onChange={handleChange}
-                    placeholder="your@email.com"
+                    placeholder="jane@company.com"
                     required
                     className="w-full px-4 py-2.5 bg-white border border-border rounded-xl text-sm text-content-primary placeholder-content-muted focus:outline-none focus:ring-2 focus:ring-orange/40 focus:border-orange transition-all"
                   />
                 </div>
               </div>
 
-              {/* Subject */}
-              <div>
-                <label htmlFor="contact-subject" className="block text-sm font-medium text-content-primary mb-1.5">
-                  Subject
-                </label>
-                <select
-                  id="contact-subject"
-                  name="subject"
-                  value={formData.subject}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-2.5 bg-white border border-border rounded-xl text-sm text-content-primary focus:outline-none focus:ring-2 focus:ring-orange/40 focus:border-orange transition-all appearance-none"
-                >
-                  <option value="" disabled>Select a topic</option>
-                  <option value="general">General Inquiry</option>
-                  <option value="support">Technical Support</option>
-                  <option value="enterprise">Enterprise Plan</option>
-                  <option value="partnership">Partnership</option>
-                  <option value="bug">Bug Report</option>
-                  <option value="other">Other</option>
-                </select>
+              {/* Row 2: Company Name + Role */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div>
+                  <label htmlFor="contact-company" className="block text-sm font-medium text-content-primary mb-1.5">
+                    Company Name <span className="text-danger">*</span>
+                  </label>
+                  <input
+                    id="contact-company"
+                    name="companyName"
+                    type="text"
+                    value={formData.companyName}
+                    onChange={handleChange}
+                    placeholder="Acme Logistics Co."
+                    required
+                    className="w-full px-4 py-2.5 bg-white border border-border rounded-xl text-sm text-content-primary placeholder-content-muted focus:outline-none focus:ring-2 focus:ring-orange/40 focus:border-orange transition-all"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="contact-role" className="block text-sm font-medium text-content-primary mb-1.5">
+                    Your Role <span className="text-danger">*</span>
+                  </label>
+                  <select
+                    id="contact-role"
+                    name="role"
+                    value={formData.role}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-4 py-2.5 bg-white border border-border rounded-xl text-sm text-content-primary focus:outline-none focus:ring-2 focus:ring-orange/40 focus:border-orange transition-all appearance-none"
+                  >
+                    <option value="" disabled>Select your role</option>
+                    <option value="operations">Operations Manager</option>
+                    <option value="logistics">Logistics Manager</option>
+                    <option value="analyst">Data Analyst</option>
+                    <option value="supply-chain">Supply Chain Lead</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
               </div>
 
               {/* Message */}
@@ -252,19 +267,19 @@ const ContactFormSection = () => {
 const faqs = [
   {
     q: 'How quickly can I get started with Vyn?',
-    a: 'You can sign up and upload your first dataset in under 5 minutes. Our platform auto-detects your data format and starts analysis immediately.',
+    a: 'You can sign up and upload your first CSV dataset in under 5 minutes. No data science background required — just prepare your execution timestamps in the required 5-column format and upload.',
   },
   {
-    q: 'Do you offer enterprise support?',
-    a: 'Yes! We offer dedicated support, custom integrations, and SLA guarantees for enterprise customers. Reach out via email or select "Enterprise Plan" in the contact form.',
+    q: 'Do I need any technical skills to use Vyn?',
+    a: 'No. If you can export a spreadsheet to CSV, you can use Vyn. The platform automatically computes baselines and flags bottlenecks. No SQL, no code, no data pipelines needed.',
   },
   {
-    q: 'Is Vyn open source?',
-    a: 'Yes, Vyn is fully open source. You can view the code, report issues, and contribute on GitHub.',
+    q: 'What data formats does Vyn support?',
+    a: 'Vyn currently accepts CSV files only. Your file must contain five columns: process_id, step_code, start_time, end_time, and location. API integrations are planned for a future release.',
   },
   {
-    q: 'What data formats do you support?',
-    a: 'Vyn supports CSV, Excel, and JSON event logs. We also offer API integration for real-time streaming data.',
+    q: 'Does Vyn offer enterprise support?',
+    a: 'Yes — our Enterprise plan includes dedicated support, custom risk thresholds, and unlimited CSV uploads. Use the contact form above and select "Operations Manager" or "Logistics Manager" to start an enterprise conversation.',
   },
 ];
 
