@@ -19,12 +19,17 @@ const ForgotPasswordPage = () => {
   const [sent, setSent] = useState(false);
   const [resendCooldown, setResendCooldown] = useState(0);
 
-  const showError = (touched || submitted) && email.trim() === '';
+  const isValidEmail = (value: string) =>
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+
+  const emailEmpty = (touched || submitted) && email.trim() === '';
+  const emailInvalid = (touched || submitted) && email.trim() !== '' && !isValidEmail(email);
+  const hasError = emailEmpty || emailInvalid;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitted(true);
-    if (!email.trim()) return;
+    if (!email.trim() || !isValidEmail(email)) return;
     // TODO: Integrate with auth API
     console.log('Password reset requested for:', email);
     setSent(true);
@@ -114,7 +119,7 @@ const ForgotPasswordPage = () => {
             Email address
           </label>
           <div className="relative">
-            <Mail className={`absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 pointer-events-none ${showError ? 'text-danger' : 'text-content-muted'}`} />
+            <Mail className={`absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 pointer-events-none ${hasError ? 'text-danger' : 'text-content-muted'}`} />
             <input
               id="reset-email"
               type="email"
@@ -125,14 +130,17 @@ const ForgotPasswordPage = () => {
               autoComplete="email"
               autoFocus
               className={`w-full pl-10 pr-4 py-2.5 bg-white border rounded-xl text-sm text-content-primary placeholder-content-muted focus:outline-none focus:ring-2 transition-all ${
-                showError
+                hasError
                   ? 'border-danger focus:ring-danger/40 focus:border-danger bg-danger-50/30'
                   : 'border-border focus:ring-orange/40 focus:border-orange'
               }`}
             />
           </div>
-          {showError && (
+          {emailEmpty && (
             <p className="text-xs text-danger mt-1.5">Email is required</p>
+          )}
+          {emailInvalid && (
+            <p className="text-xs text-danger mt-1.5">Please enter a valid email address</p>
           )}
         </div>
 

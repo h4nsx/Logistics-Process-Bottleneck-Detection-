@@ -2,6 +2,8 @@ import { Routes, Route } from 'react-router-dom';
 import MainLayout from './layout/MainLayout';
 import AuthLayout from './layout/AuthLayout';
 import HomePage from '../pages/marketing/HomePage';
+import CompanyPage from '../pages/marketing/CompanyPage';
+import ContactPage from '../pages/marketing/ContactPage';
 import LoginPage from '../pages/auth/LoginPage';
 import RegisterPage from '../pages/auth/RegisterPage';
 import ForgotPasswordPage from '../pages/auth/ForgotPasswordPage';
@@ -9,6 +11,7 @@ import DocumentationPage from '../pages/resources/Documentation';
 import HelpCenterPage from '../pages/resources/HelpCenter';
 import InteractiveDemoPage from '../pages/resources/InteractiveDemo';
 import ApiReferencePage from '../pages/resources/ApiReference';
+import ResetPasswordPage from '../pages/auth/ResetPasswordPage';
 
 /* Placeholder page for demonstration */
 const PlaceholderPage = ({ title }: { title: string }) => (
@@ -38,6 +41,9 @@ const AppRouter = () => {
         <Route path="/resources/api" element={<ApiReferencePage />} />
         <Route path="/resources/:section" element={<PlaceholderPage title="Resources" />} />
         <Route path="/about-us/:section" element={<PlaceholderPage title="About Us" />} />
+        <Route path="/about-us/about" element={<CompanyPage />} />
+        <Route path="/about-us/contact" element={<ContactPage />} />
+        <Route path="/about-us/team" element={<PlaceholderPage title="Team" />} />
       </Route>
 
       {/* Auth pages use AuthLayout (split-screen, no Navbar/Footer) */}
@@ -45,6 +51,7 @@ const AppRouter = () => {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+        <Route path="/reset-password" element={<ResetPasswordPage />} />
       </Route>
     </Routes>
   );
