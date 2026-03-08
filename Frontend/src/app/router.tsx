@@ -5,6 +5,10 @@ import HomePage from '../pages/marketing/HomePage';
 import LoginPage from '../pages/auth/LoginPage';
 import RegisterPage from '../pages/auth/RegisterPage';
 import ForgotPasswordPage from '../pages/auth/ForgotPasswordPage';
+import DocumentationPage from '../pages/resources/Documentation';
+import HelpCenterPage from '../pages/resources/HelpCenter';
+import InteractiveDemoPage from '../pages/resources/InteractiveDemo';
+import ApiReferencePage from '../pages/resources/ApiReference';
 
 /* Placeholder page for demonstration */
 const PlaceholderPage = ({ title }: { title: string }) => (
@@ -26,8 +30,12 @@ const AppRouter = () => {
         <Route path="/product/:section" element={<PlaceholderPage title="Product" />} />
         <Route path="/solutions/:industry" element={<PlaceholderPage title="Solutions" />} />
         <Route path="/demo" element={<PlaceholderPage title="Demo" />} />
+        <Route path="/demo/example" element={<InteractiveDemoPage />} />
         <Route path="/demo/:section" element={<PlaceholderPage title="Demo" />} />
         <Route path="/pricing" element={<PlaceholderPage title="Pricing" />} />
+        <Route path="/resources/docs" element={<DocumentationPage />} />
+        <Route path="/resources/help" element={<HelpCenterPage />} />
+        <Route path="/resources/api" element={<ApiReferencePage />} />
         <Route path="/resources/:section" element={<PlaceholderPage title="Resources" />} />
         <Route path="/about-us/:section" element={<PlaceholderPage title="About Us" />} />
       </Route>
