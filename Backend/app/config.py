@@ -10,8 +10,8 @@ _DEFAULT_MODEL_DIR = os.path.join(_PROJECT_ROOT, "ML", "model", "process_models"
 
 
 class Settings(BaseSettings):
-    # Use postgresql+psycopg:// — binary wheels on Windows; asyncpg not installed
-    database_url: str = "postgresql+psycopg://postgres:password@localhost:5432/logistics_db"
+    # Default for local dev only. On Render set DATABASE_URL (Internal Database URL).
+    database_url: str = "postgresql+asyncpg://postgres:password@localhost:5432/logistics_db"
 
     @field_validator("database_url", mode="before")
     @classmethod
