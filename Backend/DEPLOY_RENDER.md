@@ -44,7 +44,7 @@ Trong Web Service → **Environment**:
 
 | Key | Value |
 |-----|--------|
-| `DATABASE_URL` | **Link** → chọn PostgreSQL → property **Internal Database URL** |
+| `DATABASE_URL` | **Bắt buộc.** **Add from Database** → chọn PostgreSQL → **Internal Database URL**. Nếu thiếu, `alembic upgrade head` sẽ kết nối `localhost:5432` và báo `Connection refused`. |
 | `LOG_LEVEL` | `INFO` |
 
 > **Không set `PYTHON_VERSION` trên dashboard** nếu gặp lỗi version — dùng file `.python-version` ở repo root (đã có `3.11.9`).
@@ -74,7 +74,7 @@ Trong **Settings** của Web Service:
 
 ## Dùng Blueprint (tạo DB + Web cùng lúc)
 
-Trong repo đã có `Backend/render.yaml`:
+Trong repo đã có **`render.yaml` ở root** (và bản sao trong `Backend/`):
 
 1. **New +** → **Blueprint** → chọn repo → Render đọc `render.yaml`.
 2. Render tự tạo DB + Web Service theo cấu hình.
