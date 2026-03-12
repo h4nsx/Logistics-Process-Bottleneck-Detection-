@@ -10,9 +10,10 @@ if sys.platform == "win32":
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api.routes import anomalies, baselines, processes, schema_routes, upload
+from app.api.routes import anomalies, baselines, ml_routes, processes, schema_routes, upload
 from app.config import settings
 from app.database import dispose_engine
+from app.services import ml_service
 
 logging.basicConfig(
     level=getattr(logging, settings.log_level.upper(), logging.INFO),
@@ -24,6 +25,7 @@ logger = logging.getLogger(__name__)
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     logger.info("Starting Logistics Bottleneck Detection API")
+    ml_service.init_models(settings.ml_model_dir)
     yield
     await dispose_engine()
     logger.info("Database engine disposed")
@@ -54,6 +56,7 @@ app.include_router(anomalies.router, prefix=API_PREFIX, tags=["Anomalies"])
 app.include_router(baselines.router, prefix=API_PREFIX, tags=["Baselines"])
 app.include_router(processes.router, prefix=API_PREFIX, tags=["Processes"])
 app.include_router(schema_routes.router, prefix=API_PREFIX, tags=["Schema"])
+app.include_router(ml_routes.router, prefix=API_PREFIX, tags=["ML"])
 
 
 @app.get("/health", tags=["Health"])

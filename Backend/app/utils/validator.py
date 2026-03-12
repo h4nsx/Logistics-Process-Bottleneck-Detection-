@@ -71,8 +71,8 @@ def validate_row(
         "process_id": str(mapped["process_id"]),
         "step_code": str(mapped["step_code"]),
         "location": str(mapped["location"]),
-        "start_time": start.isoformat(),
-        "end_time": end.isoformat(),
+        "start_time": start,           # datetime object — asyncpg requires native types
+        "end_time": end,
         "duration_minutes": duration_minutes,
     }, None
 

@@ -70,14 +70,14 @@ SELECT
     id, process_id, step_code, location,
     duration_minutes, z_score, risk_percent, detected_at
 FROM anomalies
-WHERE (:min_risk IS NULL OR risk_percent >= :min_risk)
+WHERE (CAST(:min_risk AS DOUBLE PRECISION) IS NULL OR risk_percent >= :min_risk)
 ORDER BY risk_percent DESC, detected_at DESC
 LIMIT :limit;
 """
 
 COUNT_ANOMALIES = """
 SELECT COUNT(*) FROM anomalies
-WHERE (:min_risk IS NULL OR risk_percent >= :min_risk);
+WHERE (CAST(:min_risk AS DOUBLE PRECISION) IS NULL OR risk_percent >= :min_risk);
 """
 
 # ── Query: Process Detail ─────────────────────────────────────────────────────
@@ -111,7 +111,7 @@ ORDER BY s.start_time;
 GET_BASELINES = """
 SELECT step_code, location, mean, std, p95, sample_size, updated_at
 FROM baselines
-WHERE (:step_code IS NULL OR step_code = :step_code)
-  AND (:location  IS NULL OR location  = :location)
+WHERE (CAST(:step_code AS TEXT) IS NULL OR step_code = :step_code)
+  AND (CAST(:location  AS TEXT) IS NULL OR location  = :location)
 ORDER BY step_code, location;
 """

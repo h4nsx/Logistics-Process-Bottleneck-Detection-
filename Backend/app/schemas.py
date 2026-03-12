@@ -108,3 +108,69 @@ class SchemaSuggestResponse(BaseModel):
     suggestions: dict[str, ColumnSuggestion]
     unmapped_columns: list[str]
     missing_required: list[str]
+
+
+# ── ML Predictions ─────────────────────────────────────────────────────────────
+
+class StepAnomalyDetail(BaseModel):
+    step_code: str
+    duration_min: float
+    baseline_mean: float
+    baseline_p95: float
+    z_score: float | None
+    exceeds_p95: bool
+
+
+class MLCasePrediction(BaseModel):
+    case_id: str
+    process_code: str
+    anomaly_score: float
+    risk_percentile: float
+    is_anomaly: bool
+    bottleneck_steps: list[StepAnomalyDetail]
+    total_duration_min: float
+    step_count: int
+
+    @property
+    def risk_label(self) -> str:
+        if self.risk_percentile >= 80:
+            return "High Risk"
+        if self.risk_percentile >= 50:
+            return "Warning"
+        return "Normal"
+
+
+class MLAnalyzeResponse(BaseModel):
+    status: str
+    total_cases: int
+    anomaly_count: int
+    process_breakdown: dict[str, int]
+    predictions: list[MLCasePrediction]
+    skipped_cases: int
+    processing_time_seconds: float
+
+
+class MLPredictionRecord(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: int
+    case_id: str
+    process_code: str
+    anomaly_score: float
+    risk_percentile: float
+    is_anomaly: bool
+    bottleneck_steps: list[StepAnomalyDetail]
+    total_duration_min: float
+    step_count: int
+    analyzed_at: datetime
+
+
+class MLPredictionsResponse(BaseModel):
+    predictions: list[MLPredictionRecord]
+    total_count: int
+
+
+class MLStatusResponse(BaseModel):
+    loaded_models: list[str]
+    supported_processes: list[str]
+    model_base_dir: str

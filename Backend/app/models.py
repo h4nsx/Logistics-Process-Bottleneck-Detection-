@@ -64,3 +64,20 @@ anomalies = Table(
     Column("risk_percent", Double, nullable=False),
     Column("detected_at", TIMESTAMP, server_default=func.now()),
 )
+
+ml_predictions = Table(
+    "ml_predictions",
+    metadata,
+    Column("id", Integer, primary_key=True, autoincrement=True),
+    Column("case_id", String, nullable=False),
+    Column("process_code", String, nullable=False),
+    Column("anomaly_score", Double, nullable=False),
+    Column("risk_percentile", Double, nullable=False),
+    Column("is_anomaly", String, nullable=False),  # "true"/"false" for DB compatibility
+    Column("bottleneck_steps", String, nullable=False, server_default="[]"),
+    Column("total_duration_min", Double, nullable=False),
+    Column("step_count", Integer, nullable=False),
+    Column("analyzed_at", TIMESTAMP, server_default=func.now()),
+    Index("idx_ml_pred_case", "case_id"),
+    Index("idx_ml_pred_process", "process_code"),
+)
