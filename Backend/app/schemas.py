@@ -31,7 +31,7 @@ class AnomalyRecord(BaseModel):
     step_code: str
     location: str
     duration_minutes: float
-    z_score: float
+    z_score: float | None
     risk_percent: float
     detected_at: datetime
     severity: str = ""
@@ -39,7 +39,7 @@ class AnomalyRecord(BaseModel):
     @field_validator("severity", mode="before")
     @classmethod
     def compute_severity(cls, v: Any, info: Any) -> str:
-        risk = info.data.get("risk_percent", 0)
+        risk = float(info.data.get("risk_percent") or 0)
         if risk >= 100:
             return "High Risk"
         if risk >= 80:

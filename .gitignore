@@ -131,3 +131,4 @@ lightning_logs/
 # If you explicitly want to track a specific config csv or small model:
 # !ML/configs/model_config.json
 # !ML/data/sample_data.csv
+Backend/.env.example

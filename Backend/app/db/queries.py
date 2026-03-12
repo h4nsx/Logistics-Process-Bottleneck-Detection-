@@ -15,13 +15,13 @@ INSERT_STEP_EXECUTION = """
 INSERT INTO step_executions
     (process_id, step_code, location, start_time, end_time, duration_minutes)
 VALUES
-    (:process_id, :step_code, :location, :start_time::timestamp, :end_time::timestamp, :duration_minutes);
+    (:process_id, :step_code, :location, :start_time, :end_time, :duration_minutes);
 """
 
 # ── Baseline Computation ──────────────────────────────────────────────────────
 
 RECOMPUTE_BASELINES = """
-INSERT INTO baselines (step_code, location, mean, std, p95, sample_size, updated_at)
+INSERT INTO baselines (step_code, location, mean, std, p95, sample_size)
 SELECT
     step_code,
     location,
@@ -52,7 +52,7 @@ SELECT
     s.step_code,
     s.location,
     s.duration_minutes,
-    (s.duration_minutes - b.mean) / NULLIF(b.std, 0)           AS z_score,
+    COALESCE((s.duration_minutes - b.mean) / NULLIF(b.std, 0), 0.0) AS z_score,
     LEAST(100.0, (s.duration_minutes / b.p95) * 100.0)         AS risk_percent
 FROM step_executions s
 JOIN baselines b

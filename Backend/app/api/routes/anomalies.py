@@ -33,7 +33,7 @@ async def list_anomalies(
                 step_code=row["step_code"],
                 location=row["location"],
                 duration_minutes=float(row["duration_minutes"]),
-                z_score=float(row["z_score"]),
+                z_score=float(row["z_score"]) if row["z_score"] is not None else None,
                 risk_percent=risk,
                 detected_at=row["detected_at"],
                 severity=severity,

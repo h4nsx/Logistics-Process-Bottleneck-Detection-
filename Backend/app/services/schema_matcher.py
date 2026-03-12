@@ -1,10 +1,9 @@
 """
 Intelligent schema mapping: matches user CSV column names to the required
-logistics schema using keyword + fuzzy (Levenshtein) matching.
+logistics schema using keyword + fuzzy matching (stdlib difflib — no extra deps).
 """
+import difflib
 import re
-
-import Levenshtein
 
 from app.schemas import ColumnSuggestion, SchemaSuggestResponse
 
@@ -22,6 +21,11 @@ FIELD_KEYWORDS: dict[str, list[str]] = {
 def _normalize(name: str) -> str:
     """Lowercase and strip all non-alphanumeric characters."""
     return re.sub(r"[^a-z0-9]", "", name.lower())
+
+
+def _similarity_ratio(a: str, b: str) -> float:
+    """0.0–1.0 similarity; same scale as Levenshtein.ratio for our use."""
+    return difflib.SequenceMatcher(None, a, b).ratio()
 
 
 def _score_column(normalized_col: str, target_field: str) -> tuple[float, str]:
@@ -54,11 +58,11 @@ def _score_column(normalized_col: str, target_field: str) -> tuple[float, str]:
     if best_partial and best_partial[0] >= 70:
         return best_partial
 
-    # Fuzzy match — Levenshtein ratio against field name and keywords
+    # Fuzzy match — difflib ratio against field name and keywords
     best_fuzzy_score = 0.0
     best_fuzzy_kw = target_field
     for kw in [target_field, *keywords]:
-        ratio = Levenshtein.ratio(normalized_col, _normalize(kw))
+        ratio = _similarity_ratio(normalized_col, _normalize(kw))
         if ratio > best_fuzzy_score:
             best_fuzzy_score = ratio
             best_fuzzy_kw = kw
@@ -72,7 +76,6 @@ def suggest_mapping(columns: list[str]) -> SchemaSuggestResponse:
     For each user CSV column, find the best matching required field.
     Each required field can only be claimed by one column (greedy, highest score wins).
     """
-    # Compute (column, field) → (score, reasoning) matrix
     scores: dict[tuple[str, str], tuple[float, str]] = {}
     for col in columns:
         normalized = _normalize(col)
@@ -80,18 +83,16 @@ def suggest_mapping(columns: list[str]) -> SchemaSuggestResponse:
             score, reasoning = _score_column(normalized, field)
             scores[(col, field)] = (score, reasoning)
 
-    # Greedy assignment: pick highest-score pairs, each field assigned once
     suggestions: dict[str, ColumnSuggestion] = {}
     assigned_fields: set[str] = set()
     assigned_columns: set[str] = set()
 
-    # Sort all (col, field) pairs by score descending
     sorted_pairs = sorted(scores.items(), key=lambda x: x[1][0], reverse=True)
 
     for (col, field), (score, reasoning) in sorted_pairs:
         if col in assigned_columns or field in assigned_fields:
             continue
-        if score >= 40.0:  # minimum threshold
+        if score >= 40.0:
             suggestions[col] = ColumnSuggestion(
                 mapped_to=field, confidence=round(score, 1), reasoning=reasoning
             )
@@ -109,8 +110,5 @@ def suggest_mapping(columns: list[str]) -> SchemaSuggestResponse:
 
 
 def build_column_map(suggestions: dict[str, ColumnSuggestion]) -> dict[str, str]:
-    """
-    Convert suggestion dict { csv_col → ColumnSuggestion } into
-    a mapping { target_field → csv_col } for use in validation/transform.
-    """
+    """{ target_field → csv_col } for validation/transform."""
     return {suggestion.mapped_to: col for col, suggestion in suggestions.items()}

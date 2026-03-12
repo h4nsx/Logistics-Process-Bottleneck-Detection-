@@ -16,8 +16,10 @@ pip install -r requirements.txt
 
 ```bash
 cp .env.example .env
-# Edit .env and set your DATABASE_URL
+# Edit .env — DATABASE_URL must use psycopg (binary wheels, works on Python 3.13):
+# DATABASE_URL=postgresql+psycopg://postgres:YOUR_PASSWORD@localhost:5432/logistics_db
 ```
+If you still have `postgresql+asyncpg://` in `.env`, change it to `postgresql+psycopg://`.
 
 ### 3. Run database migrations
 
