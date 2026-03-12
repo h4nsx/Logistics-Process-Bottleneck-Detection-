@@ -26,8 +26,8 @@
 |-----|--------|
 | **Name** | `logistics-backend` |
 | **Region** | Cùng region với PostgreSQL |
-| **Branch** | `main` |
-| **Root Directory** | `Backend` |
+| **Branch** | `backend` *(hoặc `main` nếu backend đã merge)* |
+| **Root Directory** | **`Backend`** — **bắt buộc**. Nếu để trống, build sẽ lỗi `requirements.txt` not found vì file nằm trong `Backend/`. |
 | **Runtime** | Python 3 |
 | **Build Command** | `pip install -r requirements.txt` |
 | **Start Command** | `alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port $PORT --workers 2` |
@@ -45,8 +45,9 @@ Trong Web Service → **Environment**:
 | Key | Value |
 |-----|--------|
 | `DATABASE_URL` | **Link** → chọn PostgreSQL → property **Internal Database URL** |
-| `PYTHON_VERSION` | `3.12.0` |
 | `LOG_LEVEL` | `INFO` |
+
+> **Không set `PYTHON_VERSION` trên dashboard** nếu gặp lỗi version — dùng file `.python-version` ở repo root (đã có `3.11.9`).
 
 > `ML_MODEL_DIR` không cần set — code tự tính đường dẫn relative từ vị trí file source.
 
@@ -104,6 +105,24 @@ allow_origins=["https://your-frontend.vercel.app"]
 Build:   pip install -r requirements.txt
 Start:   alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port $PORT --workers 2
 Health:  /health
-Root:    Backend
-Python:  3.12.0
+Root:    Backend   ← bắt buộc (monorepo)
+Python:  .python-version ở repo root (3.11.9)
 ```
+
+---
+
+## Troubleshooting
+
+### `Could not open requirements file: requirements.txt`
+
+- **Nguyên nhân**: Render đang build từ **gốc repo** trong khi `requirements.txt` chỉ có trong **`Backend/`**.
+- **Cách xửa**: Vào service → **Settings** → **Root Directory** → nhập **`Backend`** → Save → Manual Deploy.
+
+### Deploy từ branch `main` vs `backend`
+
+- Nếu code backend đầy đủ nằm trên **`backend`**, nên chọn branch **`backend`** cho Web Service.
+- Repo đã có **`render.yaml` ở root** — dùng **Blueprint** sẽ tự set `rootDir: Backend`.
+
+### `PYTHON_VERSION must provide major.minor.patch`
+
+- Xóa biến `PYTHON_VERSION` trên dashboard; để Render đọc `.python-version` ở root.
