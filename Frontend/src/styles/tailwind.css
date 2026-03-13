@@ -1,1 +1,350 @@
 @import "tailwindcss";
+
+/* ============================================
+   Design System — Navy + Orange + Cyan
+   Vyn — Logistics Intelligence Platform
+   ============================================ */
+
+@theme {
+  /* Primary Brand */
+  --color-navy: #1e3a5f;
+  --color-navy-light: #2b4f7e;
+  --color-navy-dark: #152c49;
+  --color-navy-50: #eff6ff;
+  --color-navy-100: #dbeafe;
+  --color-navy-900: #0f1d30;
+
+  /* Speed Accent */
+  --color-orange: #f97316;
+  --color-orange-light: #fb923c;
+  --color-orange-dark: #ea580c;
+  --color-orange-50: #fff7ed;
+  --color-orange-100: #ffedd5;
+
+  /* Corporate Secondary */
+  --color-cyan: #0891b2;
+  --color-cyan-light: #22d3ee;
+  --color-cyan-dark: #0e7490;
+  --color-cyan-50: #f0fdfa;
+  --color-cyan-100: #ccfbf1;
+
+  /* Semantic — Status */
+  --color-success: #059669;
+  --color-success-light: #10b981;
+  --color-success-50: #ecfdf5;
+
+  --color-warning: #d97706;
+  --color-warning-light: #f59e0b;
+  --color-warning-50: #fffbeb;
+
+  --color-danger: #dc2626;
+  --color-danger-light: #ef4444;
+  --color-danger-50: #fef2f2;
+
+  --color-anomaly: #7c3aed;
+  --color-anomaly-light: #8b5cf6;
+  --color-anomaly-50: #f5f3ff;
+
+  /* Surfaces */
+  --color-surface: #f8fafc;
+  --color-surface-dark: #f1f5f9;
+  --color-border: #e2e8f0;
+  --color-border-dark: #cbd5e1;
+
+  /* Text */
+  --color-content-primary: #111827;
+  --color-content-secondary: #475569;
+  --color-content-muted: #94a3b8;
+
+  /* Shadows */
+  --shadow-card:
+    0 1px 3px 0 rgb(0 0 0 / 0.06), 0 1px 2px -1px rgb(0 0 0 / 0.06);
+  --shadow-elevated:
+    0 4px 6px -1px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.06);
+  --shadow-dropdown:
+    0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-navbar: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+
+  /* Font */
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+
+  /* Animation */
+  --animate-fade-in: fade-in 0.2s ease-out;
+  --animate-slide-down: slide-down 0.2s ease-out;
+  --animate-slide-up: slide-up 0.15s ease-in;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+
+/* ============================================
+   Scroll-Reveal Animations
+   ============================================ */
+
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes reveal-scale {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes reveal-left {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes reveal-right {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Floating animation for hero badges */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes float-delayed {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+/* Gradient shimmer for text */
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+/* Pulse glow for CTA buttons */
+@keyframes pulse-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(249, 115, 22, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 20px 4px rgba(249, 115, 22, 0.15);
+  }
+}
+
+/* Counter count-up visual */
+@keyframes count-pop {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Fade in + slide up entrance */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Stagger delay utilities */
+.stagger-1 {
+  animation-delay: 0ms;
+}
+.stagger-2 {
+  animation-delay: 80ms;
+}
+.stagger-3 {
+  animation-delay: 160ms;
+}
+.stagger-4 {
+  animation-delay: 240ms;
+}
+.stagger-5 {
+  animation-delay: 320ms;
+}
+.stagger-6 {
+  animation-delay: 400ms;
+}
+
+/* Scroll-reveal base class — elements start hidden */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+.reveal.revealed {
+  animation: reveal-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.reveal-scale {
+  opacity: 0;
+  transform: scale(0.92);
+}
+
+.reveal-scale.revealed {
+  animation: reveal-scale 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+
+.reveal-left.revealed {
+  animation: reveal-left 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.reveal-right {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+.reveal-right.revealed {
+  animation: reveal-right 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Float animation classes */
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float-delayed 5s ease-in-out infinite;
+  animation-delay: 1s;
+}
+
+/* Shimmer text gradient */
+.text-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--color-orange) 0%,
+    var(--color-cyan) 25%,
+    var(--color-orange) 50%,
+    var(--color-navy) 75%,
+    var(--color-orange) 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 4s linear infinite;
+}
+
+/* Pulse CTA glow */
+.animate-pulse-glow {
+  animation: pulse-glow 2.5s ease-in-out infinite;
+}
+
+/* Stats counter pop */
+.animate-count-pop {
+  opacity: 0;
+}
+
+.animate-count-pop.revealed {
+  animation: count-pop 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Base styles */
+body {
+  font-family: var(--font-sans);
+  color: var(--color-content-primary);
+  background-color: #ffffff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-surface);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border-dark);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-content-muted);
+}
