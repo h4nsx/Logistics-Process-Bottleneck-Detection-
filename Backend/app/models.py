@@ -1,5 +1,6 @@
 from sqlalchemy import (
     TIMESTAMP,
+    Boolean,
     CheckConstraint,
     Column,
     Double,
@@ -13,6 +14,19 @@ from sqlalchemy import (
 )
 
 metadata = MetaData()
+
+users = Table(
+    "users",
+    metadata,
+    Column("id", Integer, primary_key=True, autoincrement=True),
+    Column("full_name", String, nullable=False),
+    Column("email", String, nullable=False),
+    Column("hashed_password", String, nullable=False),
+    Column("is_active", Boolean, nullable=False, server_default="true"),
+    Column("created_at", TIMESTAMP, server_default=func.now()),
+    UniqueConstraint("email", name="uq_users_email"),
+    Index("idx_users_email", "email"),
+)
 
 processes = Table(
     "processes",

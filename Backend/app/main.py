@@ -10,7 +10,7 @@ if sys.platform == "win32":
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api.routes import anomalies, baselines, ml_routes, processes, schema_routes, upload
+from app.api.routes import anomalies, auth, baselines, ml_routes, processes, schema_routes, upload
 from app.config import settings
 from app.database import dispose_engine
 from app.services import ml_service
@@ -48,9 +48,12 @@ app.add_middleware(
     allow_origins=["*"],
     allow_methods=["*"],
     allow_headers=["*"],
+    allow_credentials=False,
+    expose_headers=["*"],
 )
 
 API_PREFIX = "/api"
+app.include_router(auth.router, prefix=API_PREFIX, tags=["Auth"])
 app.include_router(upload.router, prefix=API_PREFIX, tags=["Upload"])
 app.include_router(anomalies.router, prefix=API_PREFIX, tags=["Anomalies"])
 app.include_router(baselines.router, prefix=API_PREFIX, tags=["Baselines"])

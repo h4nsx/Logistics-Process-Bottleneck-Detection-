@@ -13,6 +13,9 @@ class Settings(BaseSettings):
     # Default for local dev only. On Render set DATABASE_URL (Internal Database URL).
     database_url: str = "postgresql+asyncpg://postgres:password@localhost:5432/logistics_db"
 
+    # JWT secret key — MUST be set in production via SECRET_KEY env var
+    secret_key: str = "change-me-in-production-use-a-long-random-string"
+
     @field_validator("database_url", mode="before")
     @classmethod
     def normalize_database_url(cls, v: str) -> str:
